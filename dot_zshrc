@@ -2,13 +2,16 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME=""
+
+# Star Ship
+eval "$(starship init zsh)"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,7 +73,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git tmux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,11 +94,68 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+###############################################################################
+### Personal Additions and Aliases ###
+###############################################################################
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias editconfig="code ~/.zshrc"
+
+###############################################################################
+### Catalyst SHORTCUTS ###
+###############################################################################
+alias pudl='cd ~/catalyst/pudl;conda activate pudl-dev'
+alias pudlw='cd ~/catalyst/pudl-work;conda activate pudl-dev'
+alias c3='cd ~/catalyst/deployment-gap-model;conda activate dbcp-dev'
+alias cdcatalyst='cd ~/catalyst'
+alias metrics='cd ~/catalyst/pudl-usage-metrics;conda activate pudl-usage-metrics'
+
+function rebuild_env (){
+    conda deactivate
+    conda update conda
+    conda env remove --name $1
+    conda env create --name $1 --file $2
+    conda activate $1
+}
+
+function ssh_tag_vm(){
+    gcloud compute ssh --zone "us-central1-a" "pudl-deployment-tag"  --project "catalyst-cooperative-pudl"
+}
+
+function ssh_dev_vm(){
+    gcloud compute ssh --zone "us-central1-a" "pudl-deployment-dev"  --project "catalyst-cooperative-pudl"
+}
+
+###############################################################################
+### GIT SHORTCUTS ###
+###############################################################################
+alias gg=$'clear;git status;'
+
+###############################################################################
+### General SHORTCUTS ###
+###############################################################################
+alias ta='tmux attach -t'
+alias tn='tmux new -s'
+alias tks='tmux kill-server'
+
+alias ls='ls -lash'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/apple/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/apple/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/apple/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/apple/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
