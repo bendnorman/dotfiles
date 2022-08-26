@@ -103,7 +103,7 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias editconfig="code ~/.zshrc"
+alias editzshrc="chezmoi edit ~/.zshrc"
 
 ###############################################################################
 ### Catalyst SHORTCUTS ###
@@ -134,6 +134,7 @@ function ssh_dev_vm(){
 ### GIT SHORTCUTS ###
 ###############################################################################
 alias gg=$'clear;git status;'
+alias gc='git commit -m '
 
 ###############################################################################
 ### General SHORTCUTS ###
