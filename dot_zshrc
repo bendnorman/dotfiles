@@ -123,6 +123,12 @@ function rebuild_env (){
     conda activate $1
 }
 
+function set_conda_var (){
+    source /Users/bendnorman/opt/anaconda3/etc/profile.d/conda.sh
+    conda env config vars set $1
+    conda activate $CONDA_PREFIX
+}
+
 function ssh_tag_vm(){
     gcloud compute ssh --zone "us-central1-a" "pudl-deployment-tag"  --project "catalyst-cooperative-pudl"
 }
