@@ -109,18 +109,18 @@ alias sourcezshrc="chezmoi -v apply; zsh"
 ###############################################################################
 ### Catalyst SHORTCUTS ###
 ###############################################################################
-alias pudl='cd ~/catalyst/pudl;conda activate pudl-dev'
+alias pudl='cd ~/catalyst/pudl;mamba activate pudl-dev'
 alias pudlw='cd ~/catalyst/pudl-work;conda activate pudl-dev'
 alias c3='cd ~/catalyst/deployment-gap-model;conda activate dbcp-dev'
 alias cdcatalyst='cd ~/catalyst'
 alias metrics='cd ~/catalyst/pudl-usage-metrics;conda activate pudl-usage-metrics'
 
 function rebuild_env (){
-    conda deactivate
-    conda update conda
-    conda env remove --name $1
-    conda env create --name $1 --file $2
-    conda activate $1
+    mamba deactivate
+    mamba update mamba
+    mamba env remove --name $1
+    mamba env create --name $1 --file $2
+    mamba activate $1
 }
 
 function set_conda_var (){
